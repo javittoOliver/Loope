@@ -2,6 +2,12 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import io
+from io import BytesIO
+import requests
+from PIL import Image
+import base64
+
+ruta_imagen = r"formulario.jpg"
 
 def create_excel_download_link(df):
     output = io.BytesIO()
@@ -11,7 +17,30 @@ def create_excel_download_link(df):
     return excel_data
 
 def main():
-    st.title("Formulario de Relevamiento Técnico - Implementación Loope")
+    #st.title("Formulario de Relevamiento Técnico - Implementación Loope")
+
+    # Cargar la imagen Hiwork
+    image = Image.open(ruta_imagen)
+    
+    # Convertir la imagen a base64
+    buffered = BytesIO()
+    image.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode()
+    
+    # Crear el HTML para una imagen responsiva
+    st.markdown(
+        f"""
+        <style>
+        .responsive-img {{
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }}
+        </style>
+        <img src="data:image/png;base64,{img_str}" class="responsive-img">
+        """,
+        unsafe_allow_html=True
+        )
     
     # Crear diferentes secciones usando st.expander para mejor organización
     with st.expander("1. Información General", expanded=True):
