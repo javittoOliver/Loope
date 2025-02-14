@@ -19,7 +19,7 @@ def create_excel_download_link(df):
 def main():
     #st.title("Formulario de Relevamiento Técnico - Implementación Loope")
 
-    # Cargar la imagen Hiwork
+    # Cargar la imagen
     image = Image.open(ruta_imagen)
     
     # Convertir la imagen a base64
@@ -50,6 +50,8 @@ def main():
             contacto = st.text_input("Contacto técnico principal")
         with col2:
             fecha = st.date_input("Fecha de relevamiento", datetime.now())
+    
+      
 
     with st.expander("2. Infraestructura de Base de Datos", expanded=False):
         st.subheader("2.1 Base de Datos Actual")
@@ -66,6 +68,8 @@ def main():
         odbc = st.radio("¿Dispone de conexiones ODBC configuradas?", ["Sí", "No"])
         tipo_acceso = st.multiselect("Tipo de acceso a bases de datos",
                                     ["Directo", "A través de VPN", "Otro"])
+    
+        
 
     with st.expander("3. Infraestructura Cloud", expanded=False):
         st.subheader("3.1 Google Cloud Platform")
@@ -82,11 +86,17 @@ def main():
             detalles_azure = st.text_area("Detalles de la infraestructura actual en Azure")
 
     with st.expander("4. Requerimientos de Integración", expanded=False):
-
         st.subheader("4.1 Interfaces de Usuario")
         power_bi = st.radio("¿Cuenta con licencias de Power BI?", ["Sí", "No"])
         interfaz = st.multiselect("Preferencia de interfaz",
-                                ["Power BI", "Interfaz web", "Aplicación portable", "Otra"])
+                                  ["Power BI", "Interfaz web", "Aplicación portable", "Otra"])
+
+        st.subheader("4.2 Portal Web para Tableros")
+        portal = st.radio("¿Cuenta con un portal web para mostrar tableros?", ["Sí", "No"])
+        portal_tipo = []
+        if portal == "Sí":
+            portal_tipo = st.multiselect("Tipo de portal web utilizado",
+                                         ["Sitio web propio", "WordPress", "SharePoint", "Otro"])
 
     with st.expander("5. Datos y Procesamiento", expanded=False):
         st.subheader("5.1 Tipos de Datos")
@@ -143,26 +153,32 @@ def main():
                 "Nombre de la operación", "Contacto técnico principal", "Fecha de relevamiento",
                 "Motor de base de datos", "Versión DB", "Acceso BigQuery", "Volumen de datos",
                 "Conexiones ODBC", "Tipo de acceso", "Proyecto GCP", "Región GCP",
-                "Infraestructura Azure", "Licencias OpenAI", "Integración sistemas externos",
+                "Infraestructura Azure", 
                 "Licencias Power BI", "Interfaces preferidas", "Tipos de datos",
+                "Cuenta con portal web", "Tipo de portal web",
                 "Interacciones diarias", "Tamaño audio", "Frecuencia actualización",
                 "Encriptación datos", "Nivel sensibilidad", "Normativas", "Auditorías",
                 "Módulos requeridos", "Equipo desarrollo", "Conocimientos técnicos",
                 "Ancho de banda", "Almacenamiento", "Observaciones",
-                "Responsable Técnico", "Responsable Seguridad", "Responsable Operaciones"
+                "Responsable Técnico", "Fecha Responsable Técnico",
+                "Responsable Seguridad", "Fecha Responsable Seguridad",
+                "Responsable Operaciones", "Fecha Responsable Operaciones"
             ],
             "Valor": [
                 operacion, contacto, fecha.strftime("%Y-%m-%d"),
                 motor_db, version_db, bigquery, volumen_datos,
                 odbc, ", ".join(tipo_acceso), proyecto_gcp if gcp == "Sí" else "N/A", 
                 region_gcp if gcp == "Sí" else "N/A",
-                detalles_azure if azure == "Sí" else "N/A", openai, integracion,
+                detalles_azure if azure == "Sí" else "N/A",
                 power_bi, ", ".join(interfaz), ", ".join(tipos_datos),
+                portal, ", ".join(portal_tipo),
                 interacciones, tamano_audio, frecuencia,
                 encriptacion, sensibilidad, normativas, auditorias,
                 ", ".join(modulos), equipo_desarrollo, ", ".join(conocimientos),
                 ancho_banda, almacenamiento, observaciones,
-                resp_tecnico, resp_seguridad, resp_operaciones
+                resp_tecnico, fecha_tec.strftime("%Y-%m-%d"),
+                resp_seguridad, fecha_seg.strftime("%Y-%m-%d"),
+                resp_operaciones, fecha_op.strftime("%Y-%m-%d")
             ]
         }
         
