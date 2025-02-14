@@ -7,7 +7,7 @@ import requests
 from PIL import Image
 import base64
 
-ruta_imagen = r"formulario.jpg"
+ruta_imagen = r"formulario.png"
 
 def create_excel_download_link(df):
     output = io.BytesIO()
