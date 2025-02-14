@@ -132,7 +132,7 @@ def main():
         ancho_banda = st.number_input("Ancho de banda disponible (Mbps)", min_value=0)
         almacenamiento = st.number_input("Capacidad de almacenamiento disponible (GB)", min_value=0)
 
-    with st.expander("9. Observaciones Adicionales", expanded=False):
+    with st.expander("9. Observaciones Adicionales", expanded=True):
         observaciones = st.text_area("Observaciones")
 
     with st.expander("10. Aprobaciones", expanded=False):
