@@ -146,7 +146,7 @@ def main():
             fecha_seg = st.date_input("Fecha Responsable Seguridad", datetime.now())
             fecha_op = st.date_input("Fecha Responsable Operaciones", datetime.now())
 
-    if st.button("Generar Excel"):
+    if st.button("⚙️ Generar Excel"):
         # Crear un diccionario con todos los datos recopilados
         data = {
             "Campo": [
@@ -186,7 +186,7 @@ def main():
         excel_data = create_excel_download_link(df)
         
         st.download_button(
-            label="Descargar Excel",
+            label="📥 Descargar Excel",
             data=excel_data,
             file_name=f"relevamiento_tecnico_{datetime.now().strftime('%Y%m%d')}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
